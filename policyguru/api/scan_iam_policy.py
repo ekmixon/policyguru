@@ -103,5 +103,4 @@ async def scan_iam_policy(
         "exclude-actions": exclude_actions,
         "include-actions": include_actions
     }
-    body = scan_policy(item.policy_document, exclusions_cfg)
-    return body
+    return scan_policy(item.policy_document, exclusions_cfg)

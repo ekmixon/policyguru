@@ -160,7 +160,7 @@ class WritePolicyTemplate:
 
     @property
     def json(self):
-        crud_template = {
+        return {
             "name": self.name,
             "mode": "crud",
             "read": self.read,
@@ -170,9 +170,8 @@ class WritePolicyTemplate:
             "permissions-management": self.permissions_management,
             "wildcard-only": self.wildcard_only,
             "skip-resource-constraints": self.skip_resource_constraints,
-            "exclude-actions": self.exclude_actions
+            "exclude-actions": self.exclude_actions,
         }
-        return crud_template
 
 
 @router.post("/write-iam-policy", response_model=WritePolicyResponse)
@@ -180,5 +179,4 @@ async def write_iam_policy(
     item: WritePolicyInput
 ):
     template = WritePolicyTemplate(item)
-    output = write_policy_with_template(template.json)
-    return output
+    return write_policy_with_template(template.json)

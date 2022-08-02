@@ -64,20 +64,18 @@ def write_crud_policy(event, context):
             "skip-resource-constraints"
         )
 
-    output = write_policy_with_template(crud_template)
     # logger.info(output)
-    return output
+    return write_policy_with_template(crud_template)
 
 
 def lambda_handler(event, context):
     # TODO: Validate request data
     body = write_crud_policy(event, context)
 
-    response = {"statusCode": 200, "body": json.dumps(body)}
     # print(json.dumps(body, indent=4))
     # TODO: output more useful log details
     # print(body)
-    return response
+    return {"statusCode": 200, "body": json.dumps(body)}
 
 
 def ui_response_handler(event, context):
@@ -97,10 +95,10 @@ def ui_response_handler(event, context):
         indx = key.split('_')[-1]
         if 'arn' in key:
             if key.startswith('action'):
-                action_name = event['action_name_' + indx][0]
+                action_name = event[f'action_name_{indx}'][0]
                 update_data = output_data
             else:
-                action_name = event['wc_name_' + indx][0]
+                action_name = event[f'wc_name_{indx}'][0]
                 update_data = output_data['wildcard-only']
             val = list(map(lambda x: x.strip(), unquote(val[0]).split(',')))
             update_data[action_name].extend(val)

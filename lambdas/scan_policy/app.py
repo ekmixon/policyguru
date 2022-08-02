@@ -36,8 +36,7 @@ def lambda_handler(event, context):
     }
     body = scan_policy(policy_document, exclusions_cfg)
 
-    response = {"statusCode": 200, "body": json.dumps(body)}
-    return response
+    return {"statusCode": 200, "body": json.dumps(body)}
 
 
 if __name__ == "__main__":
